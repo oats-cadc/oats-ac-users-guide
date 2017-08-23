@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "AC_admin_guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-available_commands">
+	<title>Client functionalities</title>
+	<para>Main functionalities provided:
+	</para>
+		<itemizedlist>
+                        <listitem>
+                           <para>
+                              List users                  
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                              List users waiting for registration approval
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               View a specific user
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Approve a new user registration
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Reject a new user registration
+                           </para>
+                        </listitem>
+                 </itemizedlist>
+
+	<section id="sect-General_client_description">
+		<title>General client description</title>
+		<para>
+			To show the available operations the client help can be displayed:
+		</para>
+<screen>
+export CLASSPATH=MY_WORKING_DIR/ac/cadc-access-control-admin/build/distributions/lib
+MY_WORKING_DIR/ac/cadc-access-control-admin/build/distributions/bin/cadc-access-control-admin -h
+
+Usage: userAdmin &lt;command&gt; [-v|--verbose|-d|--debug] [-h|--help]
+   [--cert=&lt;Cert File or Proxy Cert&amp;Key PEM file&gt; [--key=&lt;Unencrypted Key File&gt;]]
+Where command is
+--list                       : List users in the Users tree
+--list-pending               : List users in the UserRequests tree
+--view=&lt;userid&gt;              : Print the entire details of the user
+--approve=&lt;userid&gt; --dn=&lt;dn&gt; : Approve user with userid=&lt;userid&gt; and set the
+                             : distinguished name to &lt;dn&gt;
+--reject=&lt;userid&gt;            : Delete this user request
+
+-v|--verbose                 : Verbose mode print progress and error messages
+-d|--debug                   : Debug mode print all the logging messages
+-h|--help                    : Print this message and exit
+
+Authentication and authorization:
+  - An LdapConfig.properties file must exist in directory ~/config/
+  - The corresponding host entry (devLdap or prodLdap) must exist
+    in your ~/.dbrc file.
+</screen>
+
+	</section>
+	
+</chapter>
+

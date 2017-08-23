@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "oats_ac_users_guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-UsersManagementClientInstall">
+	<title>Access Control service user management client</title>
+	<para>
+           The Access Control can be accessed to manage users with different clients:
+        </para>
+<itemizedlist>
+<listitem>
+<para>The curl command line.</para>
+</listitem>
+<listitem>
+<para>A java client, which is described in this guide.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+	   This chapter explains how to download, build and install the 
+Access Control service java command line client to manage users. The software 
+is java written and requires a java installation. 	
+</para>
+
+
+	<section id="sect-usr_mng_software_download">
+		<title>Software download</title>
+		<screen>
+cd $MY_WORKING_DIR
+git clone https://github.com/opencadc/ac
+		</screen>
+	</section>
+	
+	<section id="sect_usr_mng_software_build">
+		<title>Access Control users management client build</title>
+		<screen>
+cd $MY_WORKING_DIR/ac/cadc-access-control-admin
+gradle build
+cd build/distributions/
+tar -xvf cadc-access-control-admin-x.y.z.tar
+		</screen>
+	</section>
+
+	<section id="sect_usr_mng_software_install">
+		<title>Access Control users management client install and configuration</title>
+		<screen>
+cd $MY_WORKING_DIR/ac/cadc-access-control-admin/build/distributions/
+tar -xvf cadc-access-control-admin-x.y.z.tar
+		</screen>
+<para>
+Check the CLASSPATH variable set in $MY_WORKING_DIR/ac/cadc-access-control-admin/build/distributions/cadc-access-control-admin-x.y.z/bin/cadc-access-control-admin
+</para>
+	</section>
+
+</chapter>
+

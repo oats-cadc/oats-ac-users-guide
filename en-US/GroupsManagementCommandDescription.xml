@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "AC_admin_guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-grp_mng_available_commands">
+	<title>Client functionalities</title>
+	<para>Main functionalities provided:
+	</para>
+		<itemizedlist>
+                        <listitem>
+                           <para>
+                              Create a new group                  
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                              View (get) a group
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Delete a group
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Add a user member to a group
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Remove a group member
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Add an administrator to a group
+                           </para>
+                        </listitem>
+                        <listitem>
+                           <para>
+                               Remove an administrator from a group
+                           </para>
+                        </listitem>
+                 </itemizedlist>
+
+	<section id="sect-grp_mng_general_client_description">
+		<title>General client description</title>
+		<para>
+			To show the available operations the client help can be displayed:
+		</para>
+
+<screen>
+export CLASSPATH=MY_WORKING_DIR/ac/cadc-access-control/build/distributions/cadc-access-control-x.y.z/lib
+$MY_WORKING_DIR/build/distributions/cadc-access-control-x.y.z/bin/cadc-access-control -h
+Usage: Group management command line tool
+
+  --create --group=&lt;uri&gt;
+  --get --group=&lt;uri&gt;
+  --delete --group=&lt;uri&gt;
+
+  --add-member --group=&lt;uri&gt; [member]...
+  --remove-member --group=&lt;uri&gt; [member]...
+
+  --add-admin --group=&lt;uri&gt; [member]...
+  --remove-admin --group=&lt;uri&gt;[member]...
+
+      [member] can be a userID (string) or a
+      group URI in the form:
+         ivo://&lt;authority&gt;/gms?&lt;group&gt;  eg:
+         ivo://cadc.nrc.ca/gms?mygroup
+</screen>
+
+	</section>
+	
+</chapter>
+

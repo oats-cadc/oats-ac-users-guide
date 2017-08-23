@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "oats_ac_users_guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-usr_mng_examples">
+	<title>Users management examples</title>
+
+<para>
+The usage of the java command line client requires the user authentication through
+user proxy. The user proxy can be obtained in three ways, given a X509 user certificate
+released by a trusted Certification Authority for authentication: mycert.crt, mykey.key
+</para>
+
+<orderedlist>
+
+<listitem>
+<para>
+The concatenetion of key plus cert (pay attention: the order matter) can be used as user proxy:
+</para>
+<screen>
+cat mykey.key mycert.crt >> userproxy.pem
+</screen>
+</listitem>
+
+<listitem>
+<para>
+The user proxy can be created using a script provided in the core module:
+</para>
+<screen>
+core/cadc-util/scripts/createProxyCert /path/mykey_and_cert.pem &lt;days of validity number&gt; cadcproxy
+</screen>
+<para>
+Where
+</para>
+<screen>
+cat mykey.key mycert.pem &gt; mykey_and_cert.pem
+</screen>
+<para>
+Certificate and key must not contain bag attributes and key must 
+be no password protected. If needed, the password can be removed doing:
+</para>
+<screen>
+openssl rsa -in mykey.pem -out mykey.pem.new
+Enter pass phrase for mykey.pem: ****************
+writing RSA key
+$&gt;mv mykey.pem.new mykey.pem
+</screen>
+</listitem>
+
+<listitem>
+<para>
+A VOMS proxy can be used. To create it:
+Create two files:
+</para>
+<screen>
+$HOME/.globus/usercert.pem (certificate)
+$HOME/.globus/userkey.pem (private key)
+</screen>
+<para>
+Permissions on the pem files must be:
+</para>
+<screen>
+644 for $HOME/.globus/usercert.pem
+400 for $HOME/.globus/userkey.pem
+</screen>
+<para>
+use the VOMS client ant your Virtual Organization:
+</para>
+<screen>
+voms-proxy-init --voms voname
+</screen>
+</listitem>
+</orderedlist>
+
+<section id="sect-usr_registration_req">
+		<title>User registration request</title>
+<para>
+An xml description of the user to register is required. Example:
+</para>
+<screen>
+&gt; cat userDescription.xml
+&lt;xml version="1.0" encoding="UTF-8"?&gt;
+&lt;userRequest&gt;
+    &lt;password&gt;XXXXXXXXX&lt;password&gt;
+  &lt;user&gt;
+    &lt;identities&gt;
+      &lt;identity type="HTTP"&gt;Auser&lt;identity&gt;
+    &lt;identities&gt;
+    &lt;personalDetails&gt;
+        &lt;userName&gt;AuserID&lt;userName&gt;
+        &lt;firstName&gt;AuserName&lt;firstName&gt;
+        &lt;lastName&gt;AuserSurname&lt;lastName&gt;
+        &lt;email&gt;a_valid_email_address&lt;email&gt;
+        &lt;address&gt;street, number&lt;address&gt;
+        &lt;institute&gt;Institution&lt;institute&gt;
+        &lt;city&gt;city&lt;city&gt;
+        &lt;country&gt;country&lt;country&gt;
+    &lt;personalDetails&gt;
+  &lt;user&gt;
+&lt;userRequest&gt;
+</screen>
+
+<para>
+User registration request:
+</para>
+
+<screen>
+curl -v  -T userDescription.xml "http://ac_service_host/ac_service_context/user_request_servlet"
+</screen>
+
+</section>
+	
+<section id="sect-list_pending">
+                <title>List pending registration requests</title>
+
+<screen>
+java ca.nrc.cadc.ac.admin.Main \
+                     --list-pending \
+                    --cert=$X509_USER_PROXY
+</screen>
+
+</section>
+
+<section id="sect-approve">
+		<title>Approve user registration request</title>
+
+<screen>
+java ca.nrc.cadc.ac.admin.Main \
+                    --approve=Auser \
+                    --dn=uid=Auser,ou=Users,ou=dc,dc=my,dc=example,dc=com
+                    --cert=$X509_USER_PROXY
+</screen>
+
+</section>
+	
+<section id="sect-reject">
+		<title>Reject user registration request</title>
+
+<screen>
+java ca.nrc.cadc.ac.admin.Main \
+                    --reject=Auser \
+                    --cert=$X509_USER_PROXY
+</screen>
+
+</section>
+	
+<section id="sect-list">
+                <title>List users</title>
+<screen>
+java ca.nrc.cadc.ac.admin.Main --list
+                              [ --cert=$X509_USER_PROXY ]
+</screen>
+<para>
+Alternatively:
+</para>
+<screen>
+https://&lt;your_access_control_service&gt;/users/
+</screen>
+
+</section>
+
+<section id="sect-delete">
+                <title>Display a user details</title>
+<screen>
+https://&lt;your_access_control_service&gt;/userscw/Auser?idType=http
+</screen>
+
+</section>
+
+<section id="sect-changepermissions">
+                <title>Dispaly current user</title>
+<screen>
+https://&lt;your_access_control_service&gt;/whoami
+</screen>
+
+</section>
+
+</chapter>
+
+
