@@ -51,6 +51,47 @@ tar -xvf cadc-access-control-admin-x.y.z.tar
 <para>
 Check the CLASSPATH variable set in $MY_WORKING_DIR/ac/cadc-access-control-admin/build/distributions/cadc-access-control-admin-x.y.z/bin/cadc-access-control-admin
 </para>
+
+<para>
+Two configuration files are needed in the home of the user running the client:
+</para>
+  <para>
+   <screen>~/.dbrc file</screen>
+The bind to LDAP is done as user 'webproxy'. The webproxy credentials are
+stored in the file named .dbrc that must exist in the home directory of the
+user running the web service. A template file can be found in:
+<screen>
+ac/cadc-access-control-server/.dbrc_example
+</screen>
+An example of this file is the following:
+   <screen>
+#server proxyuser proxyUserDN password driver serverURL
+#&lt;server hostname&gt; &lt;proxyUser in LdapConfig.properties&gt; &lt;proxyUserLdapDN&gt; &lt;password&gt; N/A N/A
+   </screen>
+More than one user can be configured in this file as shown in the subsequent example:
+   <screen>
+devLdap uid=webproxy,ou=SpecialUsers,cd=inaf,dc=oats,dc=it uid=webproxy,ou=SpecialUsers,cd=inaf,dc=oats,dc=it peperone N/A N/A
+devLdap uid=testproxy,ou=SpecialUsers,dc=testcanfar uid=testproxy,ou=SpecialUsers,dc=testcanfar peperone N/A N/A
+   </screen>
+  </para>
+
+<para>
+ <screen>~/config/LdapConfig.properties</screen>
+There are three different connection pools to LDAP per web server:
+one for read operations, one for write operations, and one for binding
+as the calling user (for login and password change.)
+All connections are made over TLS on port 636.  Pool and connection
+information is configured in LdapConfig.properties file. It must exist
+in the directory ~/config/ of the user running the web service.
+A template of this file can be found in:
+ <screen>ac/cadc-access-control-server/LdapConfig.properties</screen>
+</para>
+ <warning><para>
+Care must be taken in configuring the same server host and proxyuser in
+both <command>~/.dbrc</command> and <command>~/config/LdapConfig.properties</command>
+      </para>
+ </warning>
+
 	</section>
 
 </chapter>

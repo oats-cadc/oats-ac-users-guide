@@ -15,6 +15,18 @@ In the CADC open software repository (https://github.com/opencadc)
 the Access Control service clients command line are available. This guide explains 
 how to download and run these clients and the available commands. Examples are provided.
         </para>
+ <warning><para>
+These access control clients to manage users and groups require the configuration 
+of files <command>~/.dbrc</command> and <command>~/config/LdapConfig.properties</command>
+in the home of the user running the clients. These files contain sensitive and specialistic
+informations.
+For this reason these clients are considered administration clients.
+      </para>
+ </warning>
+        <para>
+This guide provides some simple example on how to use curl client and web broser 
+to perform simple tasks.
+        </para>
 
 	<section id="sect-Requirements">
 		<title>Requirements and recomendations</title>
